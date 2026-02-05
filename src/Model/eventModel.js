@@ -34,10 +34,8 @@ const Event = sequelize.define(
       type: DataTypes.STRING, // image URL
       allowNull: true,
     },
-    time: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    },
+    startTime: { type: DataTypes.STRING, allowNull: true },
+    endTime: { type: DataTypes.STRING, allowNull: true },
 
     slots: {
     type: DataTypes.INTEGER,

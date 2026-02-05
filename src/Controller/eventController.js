@@ -20,7 +20,8 @@ const image = req.file ? req.file.path : null;
       description,
       date,
       location,
-      time,
+      startTime,
+      endTime,
       slots,
       image,
     });
