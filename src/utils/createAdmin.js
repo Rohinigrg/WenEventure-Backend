@@ -5,20 +5,25 @@ export const createAdminIfNotExists = async () => {
   try {
     const adminEmail = "admin@gmail.com";
 
+    // Force the table name to match exactly
     const admin = await User.findOne({ where: { email: adminEmail } });
-    if (admin) return;
+
+    if (admin) {
+      console.log("Admin already exists ✅");
+      return;
+    }
 
     const hashedPassword = await bcrypt.hash("admin123", 10);
 
-    await User.create({
-      fullname: "Admin",
-      username: "admin",
+    const newAdmin = await User.create({
+      fullName: "Admin",
+      userName: "admin",
       email: adminEmail,
       password: hashedPassword,
       role: "admin",
     });
 
-    console.log("✅ Admin created successfully");
+    console.log("✅ Admin created successfully:", newAdmin.toJSON());
   } catch (error) {
     console.error("❌ Admin creation failed:", error.message);
   }

@@ -1,15 +1,15 @@
 import User from "../Model/userModel.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../security/jwt-utils.js";
+import { generateToken } from "../Security/jwt-utils.js";
 
 /**
  * REGISTER (Normal users only)
  */
 export const register = async (req, res) => {
   try {
-    const { fullname, username, email, password } = req.body;
+    const { fullName, userName, email, password } = req.body;
 
-    if (!fullname || !username || !email || !password) {
+    if (!fullName || !userName || !email || !password) {
       return res.status(400).send({ message: "All fields are required" });
     }
 
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
       return res.status(409).send({ message: "Email already in use" });
     }
 
-    const existingUsername = await User.findOne({ where: { username } });
+    const existingUsername = await User.findOne({ where: { userName } });
     if (existingUsername) {
       return res.status(409).send({ message: "Username already taken" });
     }
@@ -26,8 +26,8 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      fullname,
-      username,
+      fullName,
+      userName,
       email,
       password: hashedPassword,
       role: "user", // force normal user
@@ -56,6 +56,7 @@ export const register = async (req, res) => {
  * LOGIN (Admin & User)
  */
 export const login = async (req, res) => {
+    console.log("REQ BODY:", req.body); 
   try {
     const { email, password } = req.body;
 

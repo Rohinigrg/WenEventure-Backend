@@ -12,7 +12,7 @@ import { createAdminIfNotExists } from "./src/utils/createAdmin.js";
 const app = express();
 
 // Connect DB
-connection();
+await connection();
 
 await createAdminIfNotExists();
 
@@ -35,8 +35,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);  
 
 app.use("/uploads", express.static("uploads"));
-
-
 
 // Start server
 app.listen(5000, () => {

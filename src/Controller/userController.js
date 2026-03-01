@@ -14,17 +14,17 @@ export const getAll = async (req, res) => {
 
 export const save = async (req, res) => {
   try {
-    const { fullname, username, email, password } = req.body;
+    const { fullName, userName, email, password } = req.body;
 
-    if (!fullname || !username || !email || !password) {
+    if (!fullName || !userName || !email || !password) {
       return res.status(400).send({
         message: "All fields are required",
       });
     }
 
     const user = await User.create({
-      fullname,
-      username,
+      fullName,
+      userName,
       email,
       password,
     });
@@ -62,7 +62,7 @@ export const getById = async (req, res) => {
 export const updateById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { fullname, username, email, password } = req.body;
+    const { fullName, userName, email, password } = req.body;
 
     const user = await User.findOne({ where: { id } });
 
@@ -72,8 +72,8 @@ export const updateById = async (req, res) => {
       });
     }
 
-    user.fullname = fullname ?? user.fullname;
-    user.username = username ?? user.username;
+    user.fullName = fullName ?? user.fullName;
+    user.userName = userName ?? user.userName;
     user.email = email ?? user.email;
     user.password = password ?? user.password;
 
@@ -109,3 +109,36 @@ export const deleteById = async (req, res) => {
     res.status(500).send({ message: e.message });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; // from token middleware
+
+    const updateData = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+    };
+
+    if (req.file) {
+      updateData.avatar = req.file.path.replace(/\\/g, "/");
+    }
+
+    await User.update(updateData, {
+      where: { id: userId },
+    });
+
+    const updatedUser = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Profile update failed" });
+  }
+};
+
+

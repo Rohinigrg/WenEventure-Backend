@@ -5,7 +5,7 @@ import Event from "../Model/eventModel.js";
  */
 export const createEvent = async (req, res) => {
   try {
-const { title, description, date, location, time, slots } = req.body;
+const { title, description, date, location, startTime, endTime, slots } = req.body;
 
 const image = req.file ? req.file.path : null;
 

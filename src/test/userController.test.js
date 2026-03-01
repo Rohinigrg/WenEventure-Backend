@@ -10,15 +10,15 @@ jest.mock('..model/User',()=>({
 
 }));
 
-describe('User controller', ()=>{
-    const mockResponse=()=>{
-        const res={};
-        res.status=jest.fn().mockReturnValue(res);
-        res.json=jest.fn().mockReturnValue(res);
-        return res;
-    };
-    it('should create a new product', async(=>{
-        const req={body:{userName:'Test User', :}}
+// describe('User controller', ()=>{
+//     const mockResponse=()=>{
+//         const res={};
+//         res.status=jest.fn().mockReturnValue(res);
+//         res.json=jest.fn().mockReturnValue(res);
+//         return res;
+//     };
+//     it('should create a new product', async(=>{
+//         const req={body:{userName:'Test User', :}}
         
-    }))
-})
+//     }))
+// })

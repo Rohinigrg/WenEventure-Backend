@@ -1,38 +1,53 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../Database/db.js";
 
-export const User = sequelize.define("User", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
+export const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
 
-  fullname: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+    fullName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+    userName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
 
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-  role: {
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: "user",
+    },
+
+    avatar: {
     type: DataTypes.STRING,
-    defaultValue: "user", // 👈 VERY IMPORTANT
+    defaultValue: "uploads/default-avatar.png",
+    },
+
   },
-});
+  {
+    tableName: '"Users"',     
+    freezeTableName: true, 
+     underscored: false, 
+    timestamps: true,
+  }
+);
 
 export default User;
