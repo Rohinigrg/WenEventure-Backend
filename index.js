@@ -12,9 +12,18 @@ import { createAdminIfNotExists } from "./src/utils/createAdmin.js";
 const app = express();
 
 // Connect DB
-await connection();
-
-await createAdminIfNotExists();
+// Connect DB (Fixed for Testing)
+connection()
+  .then(() => {
+    console.log("Database connected successfully");
+    return createAdminIfNotExists();
+  })
+  .then(() => {
+    console.log("Admin check completed");
+  })
+  .catch((err) => {
+    console.error("Database connection failed:", err);
+  });
 
 
 // Middleware
@@ -40,3 +49,5 @@ app.use("/uploads", express.static("uploads"));
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
+
+export default app;
